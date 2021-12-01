@@ -1,50 +1,41 @@
 ﻿#include <iostream>
+#include "mylib.h"
 
 using namespace std;
 
-bool les5(int iArr5[], const int SIZE5)
-{
-	int SUMM1 = 0,
-		SUMM2 = 0,
-		c = SIZE5-1;
+#define True(a)\
+((a >= 0 && a < 100) ? cout << "true" : cout << "false")
 
-
-	for (int i = 1; i < SIZE5; i++, c--)
-	{
-		SUMM1 += iArr5[i];
-
-		if (i + 1 != c)
-		{
-			SUMM2 += iArr5[c];
-		}
-		else
-			break;
-
-	}
-
-	if (SUMM1==SUMM2)
-	{
-		cout << SUMM1 << " = " << SUMM2 << "-true, checkBalance" << endl;
-		return "true";
-	}
-	else
-	{	
-		cout << SUMM1 << " не = " << SUMM2 << "-false, checkBalance" << endl;
-		return "false";
-	}
-}
-
-int main()
+void main()
 {
 	setlocale(LC_ALL, "ru");
 
-	const int SIZE5 = 6;
+	//1.
 
-	int iArr5[SIZE5]{ 1, 2, 3, 1, 1,1 };
+	/*const int SIZE = 10;
+	float Arr[SIZE]{};
 
-	les5 (iArr5, SIZE5);
+	Space::inicArrtipeFloat(SIZE, Arr);
+	Space::printArr(SIZE, Arr);
+	Space::summArr(SIZE, Arr);*/
 
-	return 0;
+	//2.
+
+	/*Описать макрокоманду (через директиву define), проверяющую, 
+	входит ли переданное ей число (введенное с клавиатуры) в диапазон от нуля (включительно) до 
+	переданного ей второго аргумента (исключительно) и возвращает true или false, 
+	вывести на экран «true» или «false».
+	*/
+	
+	int iPress; // 80%
+	
+	cin >> iPress;
+	
+	True(iPress);
+	
+	//3.
+
+
 }
 
 
