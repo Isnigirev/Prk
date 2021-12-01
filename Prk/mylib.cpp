@@ -7,10 +7,11 @@ namespace Space
 {
 	void inicArrtipeFloat(const int SIZE, float Arr[])
 	{
+		
 		srand(time(nullptr));
 		for (size_t i = 0; i < SIZE; i++)
-		{
-			Arr[i] = (rand() % 100) - 50;
+		{	float fRandom = (rand() % 100) - 50;
+			Arr[i] = fRandom;
 		}
 	}
 
@@ -33,7 +34,7 @@ namespace Space
 			(Arr[i] >= 0) ? fSumm += Arr[i] : fNegsumm -= Arr[i];
 		}
 
-		cout << "Ñóììà ïîëîæèòåëüíûõ ÷èñåë: " << fSumm << ", "
-			<< "Ñóììà îòðèöàòåëüíûõ ÷èñåë: " << fNegsumm << endl;
+		cout << "Ã‘Ã³Ã¬Ã¬Ã  Ã¯Ã®Ã«Ã®Ã¦Ã¨Ã²Ã¥Ã«Ã¼Ã­Ã»Ãµ Ã·Ã¨Ã±Ã¥Ã«: " << fSumm << ", "
+			<< "Ã‘Ã³Ã¬Ã¬Ã  Ã®Ã²Ã°Ã¨Ã¶Ã Ã²Ã¥Ã«Ã¼Ã­Ã»Ãµ Ã·Ã¨Ã±Ã¥Ã«: " << fNegsumm << endl;
 	}
 }
