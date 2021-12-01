@@ -31,7 +31,7 @@ namespace Space
 
 		for (size_t i = 0; i < SIZE; i++)
 		{
-			(Arr[i] >= 0) ? fSumm += Arr[i] : fNegsumm -= Arr[i];
+			(Arr[i] >= 0) ? fSumm += i : fNegsumm -= i; //test
 		}
 
 		cout << "Ñóììà ïîëîæèòåëüíûõ ÷èñåë: " << fSumm << ", "
