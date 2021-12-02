@@ -12,12 +12,12 @@ void main()
 
 	//1.
 
-	/*const int SIZE = 10;
+	const int SIZE = 10;
 	float Arr[SIZE]{};
 
 	Space::inicArrtipeFloat(SIZE, Arr);
 	Space::printArr(SIZE, Arr);
-	Space::summArr(SIZE, Arr);*/
+	Space::summArr(SIZE, Arr);
 
 	//2.
 

@@ -19,7 +19,7 @@ namespace Space
 	{
 		for (size_t i = 0; i < SIZE; i++)
 		{
-			cout << Arr[i] << endl;
+			cout << printf ("%0.3f",Arr[i]) << endl;
 		}
 		cout << endl;
 	}
@@ -31,10 +31,10 @@ namespace Space
 
 		for (size_t i = 0; i < SIZE; i++)
 		{
-			(Arr[i] >= 0) ? fSumm += i : fNegsumm -= i; //test
+			(Arr[i] >= 0) ? fSumm += 1 : fNegsumm += 1; //test
 		}
 
-		cout << "Ñóììà ïîëîæèòåëüíûõ ÷èñåë: " << fSumm << ", "
-			<< "Ñóììà îòðèöàòåëüíûõ ÷èñåë: " << fNegsumm << endl;
+		cout << "pozitiv: " << fSumm << ", "
+			<< "negativ: " << fNegsumm << endl;
 	}
 }
