@@ -37,6 +37,13 @@ using namespace std;
 //	cout << endl;
 //}
 
+#pragma pack (push,1)
+struct Person
+{
+	int ID;
+};
+#pragma pack (pop)
+
 void main()
 {
 	setlocale(LC_ALL, "ru");
@@ -70,8 +77,18 @@ void main()
 
 	//4.
 
+	/*  
+	Выделите динамически переменную этого типа. <---?
+	
+	Сохраните эту структуру в текстовый файл. <---?
+	*/
+	
+	Person one;
+	
+	one.ID = 132456876;
+	cout << one.ID << sizeof(one.ID);
 
-
+	//ofstream
 
 }
 
