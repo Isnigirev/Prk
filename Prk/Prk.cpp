@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#define True (a) \
+#define ForLes2(a) \
 ((a >= 0 && a < 100) ? cout << "true" : cout << "false")
 
 #define MASS1 (5) 
@@ -52,17 +52,9 @@ void main()
 
 	//2.
 
-	/*Описать макрокоманду (через директиву define), проверяющую, 
-	входит ли переданное ей число (введенное с клавиатуры) в диапазон от нуля (включительно) до 
-	переданного ей второго аргумента (исключительно) и возвращает true или false, 
-	вывести на экран «true» или «false».
-	*/
-	
-	//int iPress; // 80%
-	//
-	//cin >> iPress;
-	//
-	//True(iPress);
+	/*int iPress;
+	cin >> iPress;
+	ForLes2(iPress);*/
 	
 	//3.
 
