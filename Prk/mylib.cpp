@@ -3,15 +3,14 @@
 
 
 using namespace std;
-namespace Space
+namespace forfrstHW
 {
 	void inicArrtipeFloat(const int SIZE, float Arr[])
 	{
-		
 		srand(time(nullptr));
 		for (size_t i = 0; i < SIZE; i++)
-		{	float fRandom = (rand() % 100) - 50;
-			Arr[i] = fRandom;
+		{
+			Arr[i] = (rand() % 100) - 50;
 		}
 	}
 
@@ -31,10 +30,12 @@ namespace Space
 
 		for (size_t i = 0; i < SIZE; i++)
 		{
-			(Arr[i] >= 0) ? fSumm += 1 : fNegsumm += 1; //test
+			(Arr[i] >= 0) ? fSumm += 1 : fNegsumm += 1;
 		}
 
-		cout << "pozitiv: " << fSumm << ", "
-			<< "negativ: " << fNegsumm << endl;
+		cout << "Сумма положительный чисел: " << fSumm << ", "
+			 << "Сумма отрицательных чисел: " << fNegsumm << endl;
 	}
+
+
 }

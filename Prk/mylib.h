@@ -1,5 +1,5 @@
 #pragma once
-namespace Space
+namespace forfrstHW
 {
 	void inicArrtipeFloat(const int SIZE, float Arr[]);
 
