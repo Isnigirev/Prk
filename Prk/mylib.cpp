@@ -5,6 +5,7 @@
 using namespace std;
 namespace forfrstHW
 {
+
 	void inicArrtipeFloat(const int SIZE, float Arr[])
 	{
 		srand(time(nullptr));
@@ -25,6 +26,7 @@ namespace forfrstHW
 
 	void summArr(const int SIZE, float Arr[])
 	{
+		setlocale(LC_ALL, "ru");
 		float fSumm = 0,
 			fNegsumm = 0;
 
