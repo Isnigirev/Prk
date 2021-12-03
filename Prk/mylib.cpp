@@ -26,7 +26,7 @@ namespace forfrstHW
 
 	void summArr(const int SIZE, float Arr[])
 	{
-		setlocale(LC_ALL, "ru");
+	
 		float fSumm = 0,
 			fNegsumm = 0;
 
