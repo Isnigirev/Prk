@@ -36,6 +36,4 @@ namespace forfrstHW
 		cout << "Сумма положительный чисел: " << fSumm << ", "
 			 << "Сумма отрицательных чисел: " << fNegsumm << endl;
 	}
-
-
 }
