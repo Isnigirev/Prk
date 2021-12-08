@@ -1,110 +1,103 @@
 ﻿#include <iostream>
-#include "mylib.h"
-#include <fstream>
+#include <ctime>
+#include <string>
 
 using namespace std;
+//==================================================================================================
 
-#define ForLes2(a)((a >= 0 && a < 100) ? cout << "true": cout << "false")
-
-#define MASS1 (5)
-
-#define SwapINT(SIZE,ElemMassfrst,ElemMasstwo,Zero)\
-		for (int i = 0; i < SIZE-1; i++)\
-		{\
-			if (ElemMassfrst>ElemMasstwo)\
-			{\
-			Zero=ElemMassfrst;\
-			ElemMassfrst=ElemMasstwo;\
-			ElemMasstwo=Zero;\
-			}\
-		}
-
-void isortMass3(const int SIZE, int Arr3[])
+enum fg :char
 {
-	cout << "Массив был в таком виде в момент инициализации пользователем: " << endl;
-	for (int i = 0; i < SIZE; i++)	cout << Arr3[i] << " ";
-	cout << endl;
-
-	int Zero = 0;
-
-	for (int i = 0; i < SIZE-1; i++)
-	{
-		SwapINT(SIZE,Arr3[i],Arr3[i + 1],Zero);
-	}
-
-	cout << "Массив стал таким после сортировки: " << endl;
-	for (int i = 0; i < SIZE; i++)	cout << Arr3[i] << " ";
-	cout << endl;
-}
+	_ = '_',
+	X = 'X',
+	O = 'O',
+};
 
 #pragma pack (push,1)
-struct Person
+struct Game
 {
-	string NAME;
-	char CLASS;
-	int ID;
-	float SELL;
+	int iSize = 3;
+	char PL, PC;
+	char** cArr = new char* [iSize];
+	int iTimer, iWinSize = 3, getWin;
 };
 #pragma pack (pop)
 
+void inicArr(int iSize, char** cArr)
+{
+	for (int y = 0; y < iSize; y++)
+		cArr[y] = new char[iSize];
+
+	for (int y = 0; y < iSize; y++)
+	{
+		for (int x = 0; x < iSize; x++)
+		{
+			cArr[y][x] = fg::_;
+
+		}
+	}
+}
+void seeArr(int iSize, char** cArr)
+{
+	for (int y = 0; y < iSize; y++)
+	{
+		for (int x = 0; x < iSize; x++)
+		{
+			cout << "|" << cArr[y][x];
+
+		}
+		cout << endl;
+	}
+}
+int getWin(int iSize, char** cArr, char One, int iWinSize)
+{
+	for (int y = 0; y < iSize; y++)
+	{
+		int getWin = 0;
+
+		for (int x = 0; x < iSize; x++)
+		{
+			if (cArr[y][x]==One)
+			{
+				getWin++;
+			}
+			
+		}
+		if (getWin == iWinSize)
+			return getWin;
+		
+	}
+
+
+}
 void main()
 {
-	setlocale(LC_ALL, "ru");
+	Game g;
+	inicArr(g.iSize, g.cArr);
+	seeArr (g.iSize, g.cArr);
+	srand(time(NULL));
 
-	//1.
-
-	const int SIZE = 10;
-	float Arr[SIZE]{};
-
-	forfrstHW::inicArrtipeFloat(SIZE, Arr);
-	forfrstHW::printArr(SIZE, Arr);
-	forfrstHW::summArr(SIZE, Arr);
-
-	//2.
-	
-	cout << "Введите число в диапазоне от 0 (включительно) до 100: " << endl;
-	int iPress;
-	bool tru = true;
-	cin >> iPress;
-	ForLes2(iPress);
-
-	//3.
-	cout << endl;
-	int iArr3[MASS1]{};
-
-	for (int i = 0; i < MASS1; i++)
+	do
 	{
-		cout << "Введите " << i << " элемент массива" << endl;
-		cin >> iArr3[i];
-	}
+		if (g.iTimer%2==0)
+		{
+			g.PL = fg::O;
+			g.cArr[1][0] = g.PL; g.cArr[1][1] = g.PL; g.cArr[1][2] = g.PL;
+		}
+		else
+		{
 
-	isortMass3(MASS1, iArr3);
+		}
+		if (g.iTimer==g.iSize)
+			getWin (g.iSize, g.cArr, g.PL, g.iWinSize);
 
-	//4.
+		cout << "\033[2J\033[1;1H";
+		g.iTimer++;
 
-	Person *one = new Person;
-	one->NAME = "Frstperson";
-	one->CLASS = 'A';
-	one->ID = 12500147;
-	one->SELL = 35.000f;
+	} while (g.getWin==g.iWinSize);
 
-	cout << one << " Переменная занимает памяти: " << sizeof(one);
-
-	ofstream file1;
-	file1.open("File1.txt");
-	file1.is_open();
-
-	if (!file1.is_open())
+	for (int y = 0; y < g.iSize; y++)
 	{
-		cout << "error open file1" << endl;
+		delete [] g.cArr [y];
 	}
-	else
-	{
-		file1 << one->NAME << endl
-			  <<"His age person: " << one->CLASS << endl
-			  <<"His id person: " << one->ID << endl
-			  <<"His sell person: " << one->SELL << endl;
-	}
-	file1.close();
-	delete one;
+	delete[] g.cArr;
 }
