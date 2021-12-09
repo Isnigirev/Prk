@@ -11,14 +11,13 @@ enum fg :char
 	X = 'X',
 	O = 'O',
 };
-
 #pragma pack (push,1)
 struct Game
 {
-	int iSize = 3;
+	int iSize = 5, y = 0,x = 0;
 	char PL, PC;
 	char** cArr = new char* [iSize];
-	int iTimer, iWinSize = 3, getWin;
+	int iTimer;
 };
 #pragma pack (pop)
 
@@ -32,7 +31,6 @@ void inicArr(int iSize, char** cArr)
 		for (int x = 0; x < iSize; x++)
 		{
 			cArr[y][x] = fg::_;
-
 		}
 	}
 }
@@ -47,11 +45,12 @@ void seeArr(int iSize, char** cArr)
 		cout << endl;
 	}
 }
-int getWin(int iSize, char** cArr, char One, int iWinSize)
+int getWin(int iSize, char** cArr, char One)
 {
+	int getWin = 0;
+
 	for (int y = 0; y < iSize; y++)
 	{
-		int getWin = 0;
 	//-->
 		for (int x = 0; x < iSize; x++)
 		{
@@ -64,14 +63,15 @@ int getWin(int iSize, char** cArr, char One, int iWinSize)
 				getWin = 0;
 			}
 		}
-		if (getWin == iWinSize)
+		if (getWin >= iSize)
+		{
 			return getWin;
+			break;
+		}
 	}
-	//|!^
+	//|
 	for (int x = 0; x < iSize; x++)
 	{
-		int getWin = 0;
-
 		for (int y = 0; y < iSize; y++)
 		{
 			if (cArr[y][x] == One)
@@ -83,118 +83,128 @@ int getWin(int iSize, char** cArr, char One, int iWinSize)
 				getWin = 0;
 			}
 		}
-		if (getWin == iWinSize)
+		if (getWin >= iSize)
+		{
 			return getWin;
+			break;
+		}
 	}
-	//-|!^
+	//-|
 	for (int x = 0; x < iSize; x++)
 	{
-		int getWin = 0;
-
 		for (int y = 0; y < iSize; y++)
 		{
 			if (cArr[y][x] == One)
 			{
-				for (int i = 0; i < iSize-y; i++)
+				for (int i = 0; i < iSize-1; i++)
 				{
-					if (cArr[y][x] == cArr[y + 1][x + 1])
+					if (cArr[y][x] == One)
 					{
 						getWin++;
-						cArr[y + 1][x + 1]; //?
-					}
-					else
-					{
-						getWin = 0;
+						cArr[y + 1][x + 1];
 					}
 				}
+			}
+			if (getWin >= iSize)
+			{
+			return getWin;
+			break;
 			}
 			else
 			{
 				getWin = 0;
 			}
 		}
-		if (getWin == iWinSize)
-			return getWin;
+		
 	}
-	//-|^
-
-	for (int x = 0; x < iSize; x++)
+	//-|
+	for (int y = iSize - 1; y >= 0; y--)
 	{
-		int getWin = 0;
-
-		for (int y = 0; y < iSize; y++)
+		for (int x = iSize - 1; x >= 0; x--)
 		{
 			if (cArr[y][x] == One)
 			{
-				for (int i = iSize; 0 < iSize - y; i--)
+				for (int i = 0; i < iSize; i++)
 				{
-					if (cArr[y][x] == cArr[y - 1][x + 1]) //test
+					if (cArr[y][x] == One)
 					{
 						getWin++;
-						cArr[y - 1][x - 1];
-					}
-					else
-					{
-						getWin = 0;
+						cArr[y - 1][x + 1];
 					}
 				}
+			}
+			if (getWin >= iSize)
+			{
+				return getWin;
+				break;
 			}
 			else
 			{
 				getWin = 0;
 			}
 		}
-		if (getWin == iWinSize)
-			return getWin;
 	}
-
-
-
 }
+int getCoorPL(int n, int iSize)
+{
+	cout << "Введите нужную клетку куда Вы хотите поставить фигуру: " << endl
+		 << "(подсказка-->) Вы вводите" << n << "координату" << endl;
+	cin >> n;
+	n--;
+
+	if ( n >  iSize)
+	{
+		cout << "Вы введи не верные координаты.... нужно ввести число не превышающее: "
+			 << iSize - 1 << endl;
+		cin >> n;
+		n--;
+		return n;
+	}
+	else
+	{
+		return n;
+	}
+}
+
 void main()
 {
+	setlocale(LC_ALL, "ru");
 	Game g;
 	inicArr(g.iSize, g.cArr);
-	seeArr (g.iSize, g.cArr);
+	
 	srand(time(NULL));
 
 	cout << "Выберите фигуру: " << endl
 		 << "x или O (английская раскладка)" << endl;
-	cin >> g.PL;
-	if (g.PL != 'x' || g.PL != 'X' || g.PL != 'O', g.PL != 'o')
-	{
-		cout << "Вы выбрали недопустимую фигуру...." << endl;
-	}
-	else
-	{
-		(g.PL == 'x' || g.PL == 'X') ? g.PL = fg::X, g.PC = fg::O : g.PL = fg::O, g.PC = fg::X;
 
-		do
+	//cin >> g.PL;
+	g.PL = fg::O;//delete
+	(g.PL == 'X' || g.PL == 'x') ? g.PL = fg::X, g.PC = fg::O : g.PL = fg::O, g.PC = fg::X;
+
+	do
+	{	
+		seeArr (g.iSize, g.cArr);
+		
+		if (g.iTimer % 2 == 0)
 		{
-			if (g.iTimer % 2 == 0)
-			{
-				g.PL = fg::O;
-				g.cArr[0][0] = g.PL; g.cArr[1][1] = g.PL; g.cArr[2][2] = g.PL;
-				g.getWin = getWin(g.iSize, g.cArr, g.PL, g.iWinSize);
-			}
-			else
-			{
-
-			}
-			if (g.iTimer == g.iSize)
-
-
-				cout << "\033[2J\033[1;1H";
-			g.iTimer++;
-
-		} while (!g.getWin);
-
-		/*for (int y = 0; y < g.iSize; y++)
-		{
-			delete [] g.cArr [y];
+			g.cArr[g.y = getCoorPL(g.y, g.iSize)][g.x = getCoorPL(g.x, g.iSize)] ;//?
+			g.cArr[g.y][g.x] = g.PL;
+			g.PL = getWin(g.iSize, g.cArr, g.PL);
 		}
-		delete[] g.cArr;*/
+		else
+		{
 
+		}
+
+		cout << "\033[2J\033[1;1H";
+		g.PL = getWin(g.iSize, g.cArr, g.PL);
+		g.iTimer++;
+
+	} while (g.PL != g.iSize);
+
+	for (int y = 0; y < g.iSize; y++)
+	{
+		delete [] g.cArr [y];
 	}
-	
+	delete[] g.cArr;
 }
