@@ -43,7 +43,6 @@ void seeArr(int iSize, char** cArr)
 		for (int x = 0; x < iSize; x++)
 		{
 			cout << "|" << cArr[y][x];
-
 		}
 		cout << endl;
 	}
@@ -53,19 +52,102 @@ int getWin(int iSize, char** cArr, char One, int iWinSize)
 	for (int y = 0; y < iSize; y++)
 	{
 		int getWin = 0;
-
+	//-->
 		for (int x = 0; x < iSize; x++)
 		{
 			if (cArr[y][x]==One)
 			{
 				getWin++;
 			}
-			
+			else
+			{
+				getWin = 0;
+			}
 		}
 		if (getWin == iWinSize)
 			return getWin;
-		
 	}
+	//|!^
+	for (int x = 0; x < iSize; x++)
+	{
+		int getWin = 0;
+
+		for (int y = 0; y < iSize; y++)
+		{
+			if (cArr[y][x] == One)
+			{
+				getWin++;
+			}
+			else
+			{
+				getWin = 0;
+			}
+		}
+		if (getWin == iWinSize)
+			return getWin;
+	}
+	//-|!^
+	for (int x = 0; x < iSize; x++)
+	{
+		int getWin = 0;
+
+		for (int y = 0; y < iSize; y++)
+		{
+			if (cArr[y][x] == One)
+			{
+				for (int i = 0; i < iSize-y; i++)
+				{
+					if (cArr[y][x] == cArr[y + 1][x + 1])
+					{
+						getWin++;
+						cArr[y + 1][x + 1]; //?
+					}
+					else
+					{
+						getWin = 0;
+					}
+				}
+			}
+			else
+			{
+				getWin = 0;
+			}
+		}
+		if (getWin == iWinSize)
+			return getWin;
+	}
+	//-|^
+
+	for (int x = 0; x < iSize; x++)
+	{
+		int getWin = 0;
+
+		for (int y = 0; y < iSize; y++)
+		{
+			if (cArr[y][x] == One)
+			{
+				for (int i = iSize; 0 < iSize - y; i--)
+				{
+					if (cArr[y][x] == cArr[y - 1][x + 1]) //test
+					{
+						getWin++;
+						cArr[y - 1][x - 1];
+					}
+					else
+					{
+						getWin = 0;
+					}
+				}
+			}
+			else
+			{
+				getWin = 0;
+			}
+		}
+		if (getWin == iWinSize)
+			return getWin;
+	}
+
 
 
 }
@@ -76,28 +158,43 @@ void main()
 	seeArr (g.iSize, g.cArr);
 	srand(time(NULL));
 
-	do
+	cout << "Выберите фигуру: " << endl
+		 << "x или O (английская раскладка)" << endl;
+	cin >> g.PL;
+	if (g.PL != 'x' || g.PL != 'X' || g.PL != 'O', g.PL != 'o')
 	{
-		if (g.iTimer%2==0)
-		{
-			g.PL = fg::O;
-			g.cArr[1][0] = g.PL; g.cArr[1][1] = g.PL; g.cArr[1][2] = g.PL;
-		}
-		else
-		{
-
-		}
-		if (g.iTimer==g.iSize)
-			getWin (g.iSize, g.cArr, g.PL, g.iWinSize);
-
-		cout << "\033[2J\033[1;1H";
-		g.iTimer++;
-
-	} while (g.getWin==g.iWinSize);
-
-	for (int y = 0; y < g.iSize; y++)
-	{
-		delete [] g.cArr [y];
+		cout << "Вы выбрали недопустимую фигуру...." << endl;
 	}
-	delete[] g.cArr;
+	else
+	{
+		(g.PL == 'x' || g.PL == 'X') ? g.PL = fg::X, g.PC = fg::O : g.PL = fg::O, g.PC = fg::X;
+
+		do
+		{
+			if (g.iTimer % 2 == 0)
+			{
+				g.PL = fg::O;
+				g.cArr[0][0] = g.PL; g.cArr[1][1] = g.PL; g.cArr[2][2] = g.PL;
+				g.getWin = getWin(g.iSize, g.cArr, g.PL, g.iWinSize);
+			}
+			else
+			{
+
+			}
+			if (g.iTimer == g.iSize)
+
+
+				cout << "\033[2J\033[1;1H";
+			g.iTimer++;
+
+		} while (!g.getWin);
+
+		/*for (int y = 0; y < g.iSize; y++)
+		{
+			delete [] g.cArr [y];
+		}
+		delete[] g.cArr;*/
+
+	}
+	
 }
