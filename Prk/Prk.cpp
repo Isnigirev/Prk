@@ -145,7 +145,7 @@ int getWin(int iSize, char** cArr, char One)
 		}
 	}
 }
-int getCoorPL(int n, int iSize)
+int turnPL(int n, int iSize)
 {
 	cout << "Введите нужную клетку куда Вы хотите поставить фигуру: " << endl
 		 << "(подсказка-->) Вы вводите" << n << "координату" << endl;
@@ -165,6 +165,86 @@ int getCoorPL(int n, int iSize)
 		return n;
 	}
 }
+void turnPC(int iSize, char** cArr, char One)
+{
+	for (int y = 0; y < iSize; y++)
+	{
+		for (int x = 0; x < iSize; x++)
+		{
+			if (cArr[y][x]==fg::_)
+			{
+				for (int y1= 0; y1 < iSize; y1++)
+				{
+					for (int x1 = 0; x1 < iSize; x1++)
+					{
+						if (cArr[y1][x1]==One)
+						{//-
+							if (cArr[y1][x1-1]==fg::_ && cArr[y1][x1+1]==One)
+							{
+								cArr[y1][x1 - 1] = One;
+								break;
+							}
+							else
+							{
+								for (int x1 = 0; x1 < iSize-x1; x1++) //?
+								{
+									if (cArr[y1][x1] == fg::_&&cArr[y1][x1-1]==One)
+									{
+										cArr[y1][x1] = One;
+									}
+									else
+									{
+										break;
+									}
+								}
+							}//|
+							if (cArr[y1-1][x1] == fg::_ && cArr[y1+1][x1] == One)
+							{
+								cArr[y1-1][x1] = One;
+								break;
+							}
+							else
+							{
+								for (int y1 = 0; y1 < iSize - y1; y1++) //?
+								{
+									if (cArr[y1][x1] == fg::_ && cArr[y1-1][x1] == One)
+									{
+										cArr[y1][x1] = One;
+									}
+									else
+									{
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			else if (cArr[y][x]==One)
+			{
+				if (cArr[y][x-1] == fg::_&& cArr[y][x+1] == One)
+				{
+					cArr[y][x - 1] = One;
+					break;
+				}
+				else
+				{
+					for (int x1 = 0; x1 < iSize-x; x1++)
+					{
+
+					}
+				}
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+}
+
+
 
 void main()
 {
@@ -179,7 +259,7 @@ void main()
 
 	//cin >> g.PL;
 	g.PL = fg::O;//delete
-	(g.PL == 'X' || g.PL == 'x') ? g.PL = fg::X, g.PC = fg::O : g.PL = fg::O, g.PC = fg::X;
+	//(g.PL == 'X' || g.PL == 'x') ? g.PL = fg::X, g.PC = fg::O : g.PL = fg::O, g.PC = fg::X;
 
 	do
 	{	
@@ -187,13 +267,15 @@ void main()
 		
 		if (g.iTimer % 2 == 0)
 		{
-			g.cArr[g.y = getCoorPL(g.y, g.iSize)][g.x = getCoorPL(g.x, g.iSize)] ;//?
-			g.cArr[g.y][g.x] = g.PL;
-			g.PL = getWin(g.iSize, g.cArr, g.PL);
+			//g.cArr[g.y = turnPL(g.y, g.iSize)][g.x = turnPL(g.x, g.iSize)] ;//?
+			//g.cArr[g.y][g.x] = g.PL;
+			//g.PL = getWin(g.iSize, g.cArr, g.PL);
 		}
 		else
 		{
-
+			g.PC = fg::O;
+			g.cArr[0][0] = g.PL;
+			turnPC(g.iSize, g.cArr, g.PC);
 		}
 
 		cout << "\033[2J\033[1;1H";
