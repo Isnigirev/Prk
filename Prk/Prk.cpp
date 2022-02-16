@@ -131,16 +131,10 @@ T Stack[SIZE2];
 
 boolean push(T data)
 {
-    if (data == 0)
-    {
-        return 0;
-    }
-
-    push(data / 2);
 
     if (cursor < SIZE2)
     {
-        Stack[++cursor] = data % 2;
+        Stack[++cursor] = data;
         return true;
     }
     else
@@ -150,10 +144,24 @@ boolean push(T data)
     }
 }
 
+int Rec1(int a)
+{
+    if (a == 0)
+    {
+        return 0;
+    }
+
+    Rec1(a / 2);
+
+    std::cout << (a % 2);
+}
+
 T pop()
 {
     if (cursor != -1)
     {
+        Rec1(Stack[cursor]);
+        std::cout << "<- ";
         return Stack[cursor--];
     }
     else
