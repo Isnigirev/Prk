@@ -217,11 +217,10 @@ void WidthTraversSimpleGraph(int start)
 // 4-0
 // 5-1
 
-
-
 void StackPop()
 {
-    int CounterForStackPop = 0, Counter = 0;
+    int CounterForStackPop = 0;
+    Counter = 0;
 
     for (int i = 0; Counter < SIZE2; i++)
     {
@@ -277,12 +276,9 @@ int main()
     StackPop();
 
     cout << "Обход графа рекурсивной функцией\n(с подсчётом только смежных со стартовой вершин)\n";   
-    for (int i = 0; i < SIZE2; i++)
-    {
-        resetStack();
-        DepthTraversGraph(i, i, Counter = 0);
-        cout << "Всего смежных величи со стартовой величин " << i << "->" << Counter << "\n";
-    }
+    resetStack();
+    DepthTraversGraph(0, 0, Counter = 0);
+    cout << "Всего смежных величи со стартовой величин " << 0 << "->" << Counter << "\n";
 
     return 0;
 }
