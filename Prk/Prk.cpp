@@ -3,7 +3,7 @@
 using namespace std;
 
 //1.//////////////////////////////////
-//Реализовать обход в глубину с использованием стека
+
 #define T int
 #define SIZE2 6
 #define true 1 == 1;
@@ -130,29 +130,61 @@ int get2dInt(int row, int col)
 
 int Counter = 0;
 
-void DepthTraversSimpleGraph(T st, int indx)
+void DepthTraversGraph(T start, int indx, int& Counter)
 {
     int r;
 
-    cout << st;
-
     for (int r = 0; r < SIZE2; ++r)
     {
-        if (st == indx && matrix[st][r] == 1)
+        if (start == indx && matrix[start][r] == 1)
         {
             Stack[r] = 1;
             Counter++;
         }
-
-        if (matrix[st][r] == 1 && !Stack[r])
+        if (matrix[start][r] == 1 && !Stack[r])
         {
-            cout << "->";
-            DepthTraversSimpleGraph(r, indx);
+            DepthTraversGraph(r, indx, Counter);
         }
     }
 }
 
-void WidthTraversSimpleGraph(int start, int indxx,int &Counter)
+int StackIsFull()
+{
+    int counter;
+
+    for (int i = 0; i < SIZE2; i++)
+    {
+        if (Stack[i] == 0)
+        {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+void DepthTraversSimpleGraph(T start)
+{
+    int r;
+
+    for (int r = 0; r < SIZE2; ++r)
+    {
+        if (matrix[start][r] == 1)
+        {
+            Stack[start] += 1;
+        }
+        if (matrix[start][r] == 1 &&!Stack[r])
+        {
+            DepthTraversSimpleGraph(r);
+        }
+        if (StackIsFull() == 1)
+        {
+            return;
+        }
+    }
+}
+
+void WidthTraversSimpleGraph(int start)
 {
     TwoLinkList* queue = (TwoLinkList*)malloc(sizeof(TwoLinkList));
     initTwoLinkList(queue);
@@ -162,42 +194,61 @@ void WidthTraversSimpleGraph(int start, int indxx,int &Counter)
     {
         int indx = TwoLinkDequeue(queue);
         if (Stack[indx] == 1) continue;
-        Stack[indx] = 1;
 
         for (int i = 0; i < SIZE2; ++i)
         {
-            if (start == indxx && matrix[start][i] == 1 && !Stack[i])
-            {
-                Stack[i] = i;
-                Counter++;
-            }
-
             if (get2dInt(indx, i) == 1)
             {
+                Stack[indx] += 1;
                 TwoLinkEnqueue(queue, i);
+            }
+            if (Stack[SIZE2-1] > 0)
+            {
+                return;
             }
         }
     }
 }
 
+// 0-2
+// 1-3
+// 2-1
+// 3-1
+// 4-0
+// 5-1
+
+
+
 void StackPop()
 {
-    cout << "\n";
-    for (int i = 0; i < SIZE2; i++)
+    int CounterForStackPop = 0, Counter = 0;
+
+    for (int i = 0; Counter < SIZE2; i++)
     {
-        cout << Stack[i];
+        if (Stack[i] == Counter)
+        {
+            cout << "c " << i << "->" << Stack[i] << " смежных вершин\n";
+            CounterForStackPop++;
+        }
+        if (i == SIZE2 - 1)
+        {
+            Counter++;
+            i = 0;
+        }
+        if (CounterForStackPop == SIZE2 - 1)
+        {
+            break;
+        }
     }
 }
 
 //////////////////////////////////////
 
-//обход графа по матрице смежности(с подсчётом всех вершин графа) 
-//В конце обхода вывести два получившихся списка всех узлов в порядке уменьшения количества ссылок на них.
-
 int main()
 {
     setlocale(LC_ALL, "Ru");
 //1.//////////////////////////////////
+    cout << "1.\n";
     depthTravers(0);
     resetStack();
 
@@ -209,22 +260,28 @@ int main()
     depthTravers(1);
     resetStack();
 //1.//////////////////////////////////
-    cout << "\n";
+
 //2.//////////////////////////////////
-    cout << "Обход в глубину" << endl;
-    for (int i = 0; i < SIZE2; i++)
-    {
-        cout << endl; resetStack();
-        DepthTraversSimpleGraph(i, i);
-        cout << "\nВсего смежных величи с " << i << "->" << Counter;
-    }
-    cout << "\nОбход в ширину" << endl;
+    cout << "\n2.\n";
+    // << "с циклическими связями. Нужно обойти этот граф двумя способами";
+    // "и подсчитать количество ссылок на каждый из узлов графа (полустепень захода).";
+   
+    cout << "Обход в ширину\n";
+    resetStack();
+    WidthTraversSimpleGraph(0);
+    StackPop();
+
+    cout << "Обход в глубину\n";
+    resetStack();
+    DepthTraversSimpleGraph(0);
+    StackPop();
+
+    cout << "Обход графа рекурсивной функцией\n(с подсчётом только смежных со стартовой вершин)\n";   
     for (int i = 0; i < SIZE2; i++)
     {
         resetStack();
-        WidthTraversSimpleGraph(i, i, Counter = 0);
-        StackPop();
-        cout << "\nВсего смежных величи с " << i << "->" << Counter;
+        DepthTraversGraph(i, i, Counter = 0);
+        cout << "Всего смежных величи со стартовой величин " << i << "->" << Counter << "\n";
     }
 
     return 0;
