@@ -162,6 +162,16 @@ public:
     }
 };
 
+class House : public GenericPlayer
+{
+public:
+    virtual bool isHitting() const {} // working...
+
+    void FlipFirstCard()
+    {
+        Card::Flip;
+    }
+};
 
 int main()
 {
